@@ -39,7 +39,6 @@ class Scraper(object):
 	def __init__(self):
 		# Create HTTP session for making requests
 		self.session = requests.Session()
-		# TODO: Add User-Agent randomization to avoid detection
 		self.session.headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36'}
 
 	def get_current_and_max_week(self, gender, year):
