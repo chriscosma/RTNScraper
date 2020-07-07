@@ -2,13 +2,14 @@ import requests
 import json
 from enum import Enum
 
-# Define constant URLs
+# Define scraping URLs
 BASE_URL = 'https://www.roadtonationals.com/'
 RESULTS_URL = 'api/%s/results/%s/%s/%s/%s'
 FINAL_RESULTS_URL = 'api/%s/finalresults/%s'
 CURRENT_WEEK_URL = 'api/%s/currentweek/%s'
 HA_DIFF_URL = 'api/%s/homeaway/%s'
 ROSTER_URL = 'api/%s/rostermain/%s/%s/1'
+GYMNAST_RESULTS_URL = 'api/%s/gymnast/%s/%s'
 
 class ScraperEnums(Enum):
 	'''Constants used to make scraping calls'''
@@ -59,4 +60,8 @@ class Scraper(object):
 
 	def get_roster(self, gender, year, team_id):
 		response = self.session.get(BASE_URL + (ROSTER_URL % (gender.value, year, team_id)))
+		return json.loads(response.text)
+
+	def get_gymnast_results(self, gender, year, gymnast_id):
+		response = self.session.get(BASE_URL + (GYMNAST_RESULTS_URL % (gender.value, year, gymnast_id)))
 		return json.loads(response.text)
