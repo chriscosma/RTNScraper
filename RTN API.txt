@@ -1,0 +1,241 @@
+## RTN API
+
+# Gets current season week and maximum week number given the current season year and specifiying men or women.
+# @params
+#   gender: "men" or "women"
+#   year: season year
+# @returns
+#   A JSON object with "week" and "max" keys that represent the current season week and max season week
+# @example
+#   Request: GET https://www.roadtonationals.com/api/men/currentweek/2020
+#   Response: `
+#       {"week":"11","max":"14"}
+#   `
+#
+# https://www.roadtonationals.com/api/{gender}/currentweek/{year}
+
+# Gets final results for the given season for either men or women
+# @params
+#   gender: "men" or "women"
+#   year: season year
+# @returns
+#   A JSON object where only key is "data" array. Each element of the "data" array represents a team's final results and is an object containing the following keys:
+#       "rank", "team_name", "team_id", "ncaa_final", "ncaa", "nqa", "average_score", and "high_score"
+# @example
+#   Request: GET https://www.roadtonationals.com/api/men/finalresults/2019
+#   Response: `
+#       {
+            "data": [
+                {
+                    "rank":"1",
+                    "team_name":"Stanford",
+                    "team_id":"39",
+                    "ncaa_final":"415.222",
+                    "ncaa":"407.588",
+                    "nqa":"418.025",
+                    "average_score":"415.220",
+                    "high_score":"419.350"
+                },
+                {
+                    "rank":"2",
+                    "team_name":"Oklahoma",
+                    "team_id":"29",
+                    "ncaa_final":"414.556",
+                    "ncaa":"419.191",
+                    "nqa":"421.163",
+                    "average_score":"417.975",
+                    "high_score":"425.700"
+                },
+                ...
+            ]
+        }
+#   `
+#
+# https://www.roadtonationals.com/api/{gender}/finalresults/{year}
+
+# Gets results for certain gender, season, week, team vs. individual, and event
+# @params
+#   gender: "men" or "women"
+#   year: season year
+#   week_number: week number of season
+#   team_or_individual: "0" for team results or "1" for individual results
+#   event: numerical value depending on gender chosen.
+#          if "men" specified for gender:
+#               "1"->FX, "2"->PH, "3"->SR, "4"->VT, "5"->PB, "6"->HB, "7"->AA
+#          if "women" specified for gender:
+#               "1"->VT, "2"->UB, "3"->BB, "4"->FX, "5"->AA
+# @returns
+#   A JSON object with the "data" and "schema" keys. "data" is a dictionary and "schema" is an object. "schema" contains various information about the available years to look through, 
+#   the current year, the number of weeks available to look through for each year, list of teams, and list of conferences.
+#   Each element of the "data" array represents the results and has the following keys:
+#       "rank", "name", "tid" (team id), "rqs", "usag", "reg", "con", "ave", and "high"
+#   The "schema" object has the following keys:
+#       "year", "years", "weeks", "cons", "teams", and "yearweeks"
+# @example
+#   If we want the men's team high bar results for the 3rd week of the 2014 season we would do:
+#       Request: GET https://www.roadtonationals.com/api/men/results/2014/3/0/6
+#       Response: `
+           {
+                "data": [
+                    {
+                        "rank":"1",
+                        "name":"Iowa",
+                        "tid":13,
+                        "rqs":"71.900",
+                        "usag":0,
+                        "reg":"E",
+                        "con":"Big Ten",
+                        "ave":"71.900",
+                        "high":"71.900"
+                    },
+                    {
+                        "rank":"2",
+                        "name":"Oklahoma",
+                        "tid":29,
+                        "rqs":"71.383",
+                        "usag":0,
+                        "reg":"W",
+                        "con":"MPSF",
+                        "ave":"71.383",
+                        "high":"71.500"
+                    },
+                    ...
+                ],
+                "schema": {
+                    "year": "2014",
+                    "years": [
+                        {"yr":2020},
+                        {"yr":2019},
+                        ...
+                    ],
+                    "weeks": [
+                        {
+                            "wk":"12",
+                            "date":"2014-03-31",
+                            "nqs":"3",
+                            "current":"0"
+                        },
+                        {
+                            "wk":"11",
+                            "date":"2014-03-24",
+                            "nqs":"2",
+                            "current":"0"
+                        },
+                        ...
+                    ],
+                    "cons": {
+                        {
+                            "id":"1",
+                            "name":"Big Ten"
+                        },
+                        {
+                            "id":"5",
+                            "name":"Club"
+                        },
+                        ...
+                    },
+                    "teams":{
+                        "t1":"Air Force",
+                        "t2":"Arizona State",
+                        "t3":"Army",
+                        ...
+                    },
+                    "yearweeks": {
+                        "2012":"13",
+                        "2013":"13",
+                        "2014":"12",
+                        ...
+                    }
+                }
+           }
+#       `
+#
+# https://www.roadtonationals.com/api/{gender}/results/{year}/{week_number}/{team_or_individual}/{event}
+
+# Gets H/A diff for all teams
+# @params
+#   gender: "men" or "women"
+#   year: season year
+# @returns
+#   Returns JSON array where all teams are an object in the array with the following keys:
+#       "team_name", "team_id", "avgteam", "maxteam", "homeavg", "awayavg", "counthome", "countaway", and "diff"
+# @example
+#   Request: GET https://www.roadtonationals.com/api/men/homeaway/2020
+#   Response: `
+        [
+            {
+                "team_name":"Air Force",
+                "team_id":1,
+                "avgteam":380.85800000000000409272615797817707061767578125,
+                "maxteam":387.5,
+                "homeavg":381.05000000000001136868377216160297393798828125,
+                "awayavg":380.66699999999997316990629769861698150634765625,
+                "counthome":3,
+                "countaway":3,
+                "diff":0.38300000000000000710542735760100185871124267578125
+            },
+            {
+                "team_name":"Arizona State",
+                "team_id":2,
+                "avgteam":386.99200000000001864464138634502887725830078125,
+                "maxteam":395.8500000000000227373675443232059478759765625,
+                "homeavg":386.55000000000001136868377216160297393798828125,
+                "awayavg":387.21300000000002228262019343674182891845703125,
+                "counthome":2,
+                "countaway":4,
+                "diff":-0.6630000000000000337507799486047588288784027099609375
+            },
+            ...
+        ]
+#   `
+#
+# https://www.roadtonationals.com/api/{gender}/homeaway/{year}
+
+# Gets roster for team for certain year
+# @params
+#   gender: "men" or "women"
+#   year: season year
+#   team_id: numerical team id
+# @returns
+#   JSON dictionary where each element is an object representing a person on the roster. Each object has the following keys:
+#       "id", "tid", "lname", "fname", "hometown", "fx", "ph", "sr", "v", "pb", "hb", "school_year", "events"
+#   where the keys representing events are either "1" or null depending on whether the person does them.
+# @example
+#   Request: GET https://www.roadtonationals.com/api/men/rostermain/2020/1/1
+#   Response: `
+        [
+            {
+                "id":"7517",
+                "tid":"1",
+                "lname":"Andersen",
+                "fname":"Beckett",
+                "hometown":"San Luis Obispo, CA",
+                "fx":"1",
+                "ph":null,
+                "sr":null,
+                "v":"1",
+                "pb":null,
+                "hb":null,
+                "school_year":"2",
+                "events":" FX  VT "
+            },
+            {
+                "id":"7092",
+                "tid":"1",
+                "lname":"Bzoskie",
+                "fname":"Brandon",
+                "hometown":"Thousand Oaks, CA",
+                "fx":null,
+                "ph":null,
+                "sr":"1",
+                "v":"1",
+                "pb":null,
+                "hb":"1",
+                "school_year":"3",
+                "events":" SR  VT  HB "
+            },
+            ...
+        ]
+#   `
+#
+# https://www.roadtonationals.com/api/{gender}/rostermain/{year}/{team_id}/1
