@@ -9,7 +9,7 @@
 # @example
 #   Request: GET https://www.roadtonationals.com/api/men/currentweek/2020
 #   Response: `
-#       {"week":"11","max":"14"}
+        {"week":"11","max":"14"}
 #   `
 #
 # https://www.roadtonationals.com/api/{gender}/currentweek/{year}
@@ -152,7 +152,7 @@
 #
 # https://www.roadtonationals.com/api/{gender}/results/{year}/{week_number}/{team_or_individual}/{event}
 
-# Gets H/A diff for all teams
+# Gets H/A diff for all teams, useful for obtaining list of all teams
 # @params
 #   gender: "men" or "women"
 #   year: season year
@@ -239,3 +239,81 @@
 #   `
 #
 # https://www.roadtonationals.com/api/{gender}/rostermain/{year}/{team_id}/1
+
+# Gets all meet results for certain gymnast for certain year
+# @params
+#   gender: "men" or "women"
+#   year: season year
+#   gymnast_id: RTN gymnast id
+# @returns
+#   JSON object with "team" and "meets" keys. "team" is a JSON object with information about the team of the gymnast and contains the following keys:
+#       "fname" == "0", "lname" == "1", "team_name" == "2"
+#   "meets" is an array where each element is a JSON object representing a meet that contains the following keys for both men and women:
+#       "fname", "lname", "all_around", "vault", "floor", "meet_date", "date", "home", "opponent", "meet_desc", "vt_url", "fx_url"
+#   the following keys for men:
+#       "phorse", "rings", "pbars", "highbar", "ph_url", "sr_url", "pb_url", "hb_url"
+#   and the following keys for women:
+#       "bars", "beam", "ub_url", "bb_url"
+# @example
+#   Request: GET https://www.roadtonationals.com/api/men/gymnast/2020/7133
+#   Reponse: `
+        {
+            "team": {
+                "fname":"Andrew",
+                "0":"Andrew",
+                "lname":"Bitner",
+                "1":"Bitner",
+                "team_name":"Stanford",
+                "2":"Stanford"
+            },
+            "meets": [
+                {
+                    "fname":"Andrew",
+                    "lname":"Bitner",
+                    "floor":"13.0000",
+                    "phorse":null,
+                    "rings":null,
+                    "vault":null,
+                    "pbars":null,
+                    "highbar":"13.4000",
+                    "all_around":null,
+                    "meet_date":"1578718800",
+                    "date":"Sat, Jan-11-2020",
+                    "home":"0",
+                    "opponent":"",
+                    "meet_desc":"Cal Benefit Cup",
+                    "fx_url":"wy1W9OX5qZg",
+                    "ph_url":null,
+                    "sr_url":null,
+                    "vt_url":null,
+                    "pb_url":null,
+                    "hb_url":"WLOHgkvfXX0"
+                },
+                {
+                    "fname":"Andrew",
+                    "lname":"Bitner",
+                    "floor":"13.0000",
+                    "phorse":null,
+                    "rings":null,
+                    "vault":null,
+                    "pbars":null,
+                    "highbar":"13.4000",
+                    "all_around":null,
+                    "meet_date":"1578718800",
+                    "date":"Sat, Jan-11-2020",
+                    "home":"0",
+                    "opponent":"",
+                    "meet_desc":"Cal Benefit Cup",
+                    "fx_url":"wy1W9OX5qZg",
+                    "ph_url":null,
+                    "sr_url":null,
+                    "vt_url":null,
+                    "pb_url":null,
+                    "hb_url":"WLOHgkvfXX0"
+                }
+                ...
+            ]
+        }
+#   `
+#
+# https://www.roadtonationals.com/api/{gender}/gymnast/{year}/{gymnast_id}

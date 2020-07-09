@@ -11,6 +11,7 @@
     <OutputPath>.</OutputPath>
     <Name>RTNScraper</Name>
     <RootNamespace>RTNScraper</RootNamespace>
+    <TestFramework>unittest</TestFramework>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -20,12 +21,21 @@
     <DebugSymbols>true</DebugSymbols>
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'RTNScraperBuild' ">
+    <OutputPath>bin\RTNScraperBuild\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="RTNScraper.py" />
     <Compile Include="rtn_scraper\Scraper.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="rtn_scraper\Team.py">
+    <Compile Include="rtn_scraper\Gymnastics.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="rtn_scraper\test\test_Scraper.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="rtn_scraper\test\__init__.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="rtn_scraper\__init__.py">
@@ -34,9 +44,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="rtn_scraper\" />
+    <Folder Include="rtn_scraper\test\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="RTN API.txt" />
+    <Content Include="2019.p" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
