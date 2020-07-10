@@ -35,6 +35,9 @@
     <Compile Include="rtn_scraper\test\test_Scraper.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="rtn_scraper\test\test_ScraperException.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="rtn_scraper\test\__init__.py">
       <SubType>Code</SubType>
     </Compile>
